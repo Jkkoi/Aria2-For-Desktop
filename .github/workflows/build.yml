@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install Yarn 
+      run: npm install --global yarn
+    - name: install modules
+      run: yarn install
+    - name: Compile program 
+      run: yarn dist
+    - name: Upload EXE
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'setup exe'
+        path: './build/*.exe'
+    - name: Upload ZIP
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'zip'
+        path: './build/*.zip'
