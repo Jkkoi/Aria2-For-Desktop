@@ -1,0 +1,41 @@
+{
+  "name": "Aria2ForDesktop",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Jkkoi",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "build": {
+    "appId": "top.Jkkoi.aria2ForDesktop",
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "directories": {
+      "output": "build"
+    },
+    "extraResources": {
+      "from": "resources/aria2/",
+      "to": "aria2"
+    },
+    "nsis": {
+      "oneClick": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
